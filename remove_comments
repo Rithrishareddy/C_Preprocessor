@@ -1,0 +1,54 @@
+#include"header.h"
+extern int cnt;
+void * remove_comments(char (*buf)[1000])
+{ int count1;
+      int i;
+      char *ptr=NULL;
+      int flag=0;
+      for(i=0;i<cnt;i++)
+      {      count1=0;
+              ptr=buf[i];
+
+               while(*ptr)
+              {
+                        if((flag==1) && (*ptr == '*'))
+                      {
+                              if(*(ptr+1) == '/')
+                              {
+                              flag=0;
+                              *ptr=' ';
+                              *(ptr+1)=' ';
+                              ptr+=2;
+                              continue;
+
+                              }
+                      }
+
+                      if(*ptr == '/')
+                      {
+                              if(*(ptr+1) == '/')
+                              {
+                                    memset(ptr,' ',strlen(ptr)-1);
+                                    break;
+                              }
+                              else if(*(ptr+1) == '*')
+                              {
+                                      flag=1;
+                                      *ptr=' ';
+                                      *(ptr+1)=' ';
+                                      ptr+=2;
+                                      continue;
+                              }
+                        }
+                      if(flag==1)
+                      {
+                              if(*ptr != '\n')
+                              *ptr=' ';
+
+                      }
+                      ptr++;
+
+              }
+      }
+     return buf;
+}
